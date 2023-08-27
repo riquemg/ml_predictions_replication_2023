@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo Bootstrap</title>
+  <!-- Incluindo o CSS do Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .bar {
+      fill: #D3D3D3;
+    }
+    text {
+      font-size: 12px;
+    }
+    .axis text {
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <h1 class="text-center">God Class</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="graph1"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="graph2"></div>
+    </div>
+  </div>
+
+  <h1 class="text-center">Refused Bequest</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="graph3"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="graph4"></div>
+    </div>
+  </div>
+
+  <h1 class="text-center">Feature Envy</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="graph5"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="graph6"></div>
+    </div>
+  </div>
+
+  <h1 class="text-center">Long Method</h1>
+  <div class="row">
+    <div class="col-md-6">
+      <div id="graph7"></div>
+    </div>
+    <div class="col-md-6">
+      <div id="graph8"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Incluindo os scripts do Bootstrap (jQuery e Popper.js) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<script>
+
+function rank(score, csv_file, html_id){
+  // set the dimensions and margins of the graph
+  var margin = {top: 30, right: 30, bottom: 40, left: 100},
+      width = 400 - margin.left - margin.right,
+      height = 250 - margin.top - margin.bottom;
+
+  // append the svg object to the body of the page
+  var svg = d3.select("#"+html_id)
+    .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
+
+  // get the data
+  d3.csv(csv_file, function(data) {
+
+    // Parse the data and sort by f1 in descending order
+    data.sort(function(a, b) {
+      return parseFloat(b[score]) - parseFloat(a[score]);
+    });
+
+    var algorithm = data.map(function(d) {
+      return d.algorithm;
+    });
+
+    var f1 = data.map(function(d) {
+      return parseFloat(d[score]);
+    });
+
+    // Create y scale
+    var y = d3.scaleBand()
+      .domain(algorithm)
+      .range([0, height])
+      .padding(0.1); // You can adjust this value to change the vertical spacing
+
+    // Create x scale
+    var x = d3.scaleLinear()
+      //.domain([0, Math.ceil(d3.max(f1) * 10) / 10]) // Round up the max value to the nearest 0.1
+      .domain([0, 1])
+      .range([0, width]);
+
+    // Add bars to the chart
+    svg.selectAll(".bar")
+      .data(f1)
+      .enter().append("rect")
+      .attr("class", "bar")
+      .attr("y", function(d, i) { return y(algorithm[i]); })
+      .attr("x", 0)
+      .attr("width", function(d) { return x(d); })
+      .attr("height", y.bandwidth());
+
+    // Add values to the bars
+    svg.selectAll(".bar-label")
+      .data(f1)
+      .enter().append("text")
+      .attr("class", "bar-label")
+      .attr("x", function(d) { return x(d) + 5; })
+      .attr("y", function(d, i) { return y(algorithm[i]) + y.bandwidth() / 2; })
+      .attr("dy", ".35em")
+      .text(function(d) { return d.toFixed(2); });
+
+    // Add y-axis
+    svg.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add x-axis
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  });
+}
+
+rank("f1", "gc_scores.csv", "graph1");
+rank("auc", "gc_scores.csv", "graph2");
+
+rank("f1", "rb_scores.csv", "graph3");
+rank("auc", "rb_scores.csv", "graph4");
+
+rank("f1", "fe_scores.csv", "graph5");
+rank("auc", "fe_scores.csv", "graph6");
+
+rank("f1", "lm_scores.csv", "graph7");
+rank("auc", "lm_scores.csv", "graph8");
+
+</script>
+
+</body>
+</html>

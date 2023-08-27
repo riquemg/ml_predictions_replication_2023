@@ -1,0 +1,13 @@
+features,f1,auc,set
+dit,0.0,0.4999263948181952,rfc
+fanin,0.0,0.5,fanout|rfc
+fanout,0.0,0.5,dit|fanout|rfc
+lcc,0.0,0.5,dit|fanout|rfc|wmc
+lcom*,0.0,0.5,dit|fanout|rfc|nom|wmc
+loc,0.0,0.5,dit|fanout|lcom*|rfc|nom|wmc
+noc,0.0,0.5,dit|fanin|fanout|lcom*|rfc|nom|wmc
+rfc,0.0,0.5,dit|fanin|fanout|lcom*|loc|rfc|nom|wmc
+icq,0.17142857142857143,0.5498527896363904,dit|fanin|fanout|lcc|lcom*|loc|rfc|nom|wmc
+nof,0.0,0.5,dit|fanin|fanout|lcc|lcom*|loc|rfc|icq|nom|wmc
+nom,0.0,0.5,dit|fanin|fanout|lcc|lcom*|loc|rfc|icq|nof|nom|wmc
+wmc,0.0,0.5,dit|fanin|fanout|lcc|lcom*|loc|noc|rfc|icq|nof|nom|wmc
