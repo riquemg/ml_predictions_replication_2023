@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exemplo Bootstrap</title>
+  <title>Code Smell Prediction Replication</title>
   <!-- Incluindo o CSS do Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
@@ -149,17 +149,17 @@ function rank(score, csv_file, html_id){
   });
 }
 
-rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/gc_scores.csv", "graph1");
-rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/gc_scores.csv", "graph2");
+rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "graph1");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "graph2");
 
-rank("f1", "https://github.com/labsoft-ufmg/ml_predictions_replication_2023/main/rb_scores.csv", "graph3");
-rank("auc", "https://github.com/labsoft-ufmg/ml_predictions_replication_2023/main/rb_scores.csv", "graph4");
+rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "graph3");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "graph4");
 
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "graph5");
 rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "graph6");
 
-rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/lm_scores.csv", "graph7");
-rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/lm_scores.csv", "graph8");
+rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "graph7");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "graph8");
 
 </script>
 
