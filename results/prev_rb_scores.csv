@@ -1,0 +1,8 @@
+algorithm,f1
+NB,0.28
+LR,0.36
+MLP,0.60
+DT,0.57
+KNN,0.34
+RF,0.64
+GBM,0.67
