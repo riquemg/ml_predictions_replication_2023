@@ -77,23 +77,6 @@
 
 <script>
 
-const exportButton = document.getElementById("exportButton");
-const chartContainer = document.getElementById("graph1");
-
-exportButton.addEventListener("click", () => {
-    // Use o html2canvas para capturar o conteúdo SVG como uma imagem
-    html2canvas(chartContainer).then(canvas => {
-        // Converta o canvas para um URL de imagem
-        const imageURL = canvas.toDataURL("image/png");
-
-        // Crie um link de download para a imagem
-        const downloadLink = document.createElement("a");
-        downloadLink.href = imageURL;
-        downloadLink.download = "grafico.png";
-        downloadLink.click();
-    });
-});
-
 function rank(score, csv_file, html_id){
   // set the dimensions and margins of the graph
   var margin = {top: 30, right: 30, bottom: 40, left: 100},
