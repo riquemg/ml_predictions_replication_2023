@@ -6,6 +6,9 @@
   <title>Code Smell Prediction Replication</title>
   <!-- Incluindo o CSS do Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
   <style>
     .bar {
       fill: #D3D3D3;
@@ -73,6 +76,23 @@
 <script src="https://d3js.org/d3.v4.js"></script>
 
 <script>
+
+const exportButton = document.getElementById("exportButton");
+const chartContainer = document.getElementById("graph1");
+
+exportButton.addEventListener("click", () => {
+    // Use o html2canvas para capturar o conteúdo SVG como uma imagem
+    html2canvas(chartContainer).then(canvas => {
+        // Converta o canvas para um URL de imagem
+        const imageURL = canvas.toDataURL("image/png");
+
+        // Crie um link de download para a imagem
+        const downloadLink = document.createElement("a");
+        downloadLink.href = imageURL;
+        downloadLink.download = "grafico.png";
+        downloadLink.click();
+    });
+});
 
 function rank(score, csv_file, html_id){
   // set the dimensions and margins of the graph
