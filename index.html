@@ -65,6 +65,25 @@
     </div>
   </div>
 
+  <h1 class="text-center">ROC-AUC Results</h1>
+  <div class="row">
+    <div class="col-sm-6">
+      <div id="graph9"></div>
+    </div>
+    <div class="col-sm-6">
+      <div id="graph10"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div id="graph11"></div>
+    </div>
+    <div class="col-sm-6">
+      <div id="graph12"></div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Incluindo os scripts do Bootstrap (jQuery e Popper.js) -->
@@ -153,20 +172,22 @@ function rank(score, csv_file, html_id){
 }
 
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "graph1");
-//rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "graph2");
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/prev_gc_scores.csv", "graph2");
 
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "graph3");
-//rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "graph4");
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/prev_rb_scores.csv", "graph4");
 
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "graph5");
-//rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "graph6");
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/prev_fe_scores.csv", "graph6");
 
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "graph7");
-//rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "graph8");
 rank("f1", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/prev_lm_scores.csv", "graph8");
+
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "graph9");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "graph10");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "graph11");
+rank("auc", "https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "graph12");
+
 
 </script>
 
