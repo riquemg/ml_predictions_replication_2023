@@ -1,88 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Gráfico de Barras com D3.js</title>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo de Página Bootstrap</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Inclua o CSS do Bootstrap (v4.5.2) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <svg id="grafico"></svg>
-    <script src="script.js"></script>
+
+<div class="container">
+    <!-- Início da Linha (Row) -->
+    <div class="row">
+        <!-- Coluna 1 -->
+        <div class="col-sm-3">
+          <h5 class="card-title text-center">God Class F1</h5>
+          <svg id="grafico1"></svg>
+        </div>
+
+        <!-- Coluna 2 -->
+        <div class="col-sm-3">
+            <h5 class="card-title text-center">Refused Bequest F1</h5>
+            <svg id="grafico2"></svg>
+        </div>
+
+        <!-- Coluna 3 -->
+        <div class="col-sm-3">
+            <h5 class="card-title text-center">Feature Envy F1</h5>
+            <svg id="grafico3"></svg>
+        </div>
+
+        <!-- Coluna 4 -->
+        <div class="col-sm-3">
+          <h5 class="card-title text-center">Long Method F1</h5>
+          <svg id="grafico4"></svg>
+        </div>
+    </div>
+    <!-- Fim da Linha (Row) -->
+
+    <div class="row">
+        <!-- Coluna 1 -->
+        <div class="col-sm-3">
+          <h5 class="card-title text-center">God Class AUC</h5>
+          <svg id="grafico5"></svg>
+        </div>
+
+        <!-- Coluna 2 -->
+        <div class="col-sm-3">
+            <h5 class="card-title text-center">Refused Bequest AUC</h5>
+            <svg id="grafico6"></svg>
+        </div>
+
+        <!-- Coluna 3 -->
+        <div class="col-sm-3">
+            <h5 class="card-title text-center">Feature Envy AUC</h5>
+            <svg id="grafico7"></svg>
+        </div>
+
+        <!-- Coluna 4 -->
+        <div class="col-sm-3">
+          <h5 class="card-title text-center">Long Method AUC</h5>
+          <svg id="grafico8"></svg>
+        </div>
+    </div>
+</div>
+
+<!-- Inclua o JavaScript do Bootstrap (v4.5.2) e o jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 
+
 <script>
-  // Defina as dimensões do gráfico
-  const largura = 600;
-  const altura = 400;
-  const margem = { topo: 20, direita: 30, inferior: 40, esquerda: 60 };
+  
+  function plot(csv_url, html_id, score){
+    // Defina as dimensões do gráfico
+    const largura = 300;
+    const altura = 200;
+    const margem = { topo: 20, direita: 30, inferior: 40, esquerda: 60 };
 
-  // Calcule as dimensões internas do gráfico
-  const larguraInterna = largura - margem.esquerda - margem.direita;
-  const alturaInterna = altura - margem.topo - margem.inferior;
+    // Calcule as dimensões internas do gráfico
+    const larguraInterna = largura - margem.esquerda - margem.direita;
+    const alturaInterna = altura - margem.topo - margem.inferior;
 
-  // Selecione o elemento SVG
-  const svg = d3.select("#grafico")
-      .attr("width", largura)
-      .attr("height", altura);
+    // Selecione o elemento SVG
+    const svg = d3.select("#"+html_id)
+        .attr("width", largura)
+        .attr("height", altura);
 
-  // Crie um grupo dentro do SVG para as barras
-  const grupoBarras = svg.append("g")
-      .attr("transform", `translate(${margem.esquerda}, ${margem.topo})`);
+    // Crie um grupo dentro do SVG para as barras
+    const grupoBarras = svg.append("g")
+        .attr("transform", `translate(${margem.esquerda}, ${margem.topo})`);
 
-  // Carregue o arquivo CSV e crie o gráfico de barras
-  d3.csv("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv").then(function(data) {
+    // Carregue o arquivo CSV e crie o gráfico de barras
+    d3.csv(csv_url).then(function(data) {
 
-      // Converta os valores de f1
-      data.forEach(function(d) {
-          d.f1 = +d.f1;
-      });
+        // Converta os valores de f1
+        data.forEach(function(d) {
+            d[score] = +d[score];
+        });
 
-      // Crie escalas para os eixos X e Y
-      const escalaX = d3.scaleBand()
-          .domain(data.map(d => d.algorithm))
-          .range([0, larguraInterna])
-          .padding(0.1);
+        // Crie escalas para os eixos X e Y
+        const escalaX = d3.scaleBand()
+            .domain(data.map(d => d.algorithm))
+            .range([0, larguraInterna])
+            .padding(0.1);
 
-      const escalaY = d3.scaleLinear()
-          .domain([0, d3.max(data, d => Math.max(d.f1))])
-          .nice()
-          .range([alturaInterna, 0]);
+        const escalaY = d3.scaleLinear()
+            .domain([0, d3.max(data, d => Math.max(d[score]))])
+            .nice()
+            .range([alturaInterna, 0]);
 
-      // Crie os eixos X e Y
-      const eixoX = d3.axisBottom(escalaX);
-      const eixoY = d3.axisLeft(escalaY);
+        // Crie os eixos X e Y
+        const eixoX = d3.axisBottom(escalaX);
+        const eixoY = d3.axisLeft(escalaY);
 
-      // Adicione os eixos ao gráfico
-      grupoBarras.append("g")
-          .attr("class", "eixo-x")
-          .attr("transform", `translate(0, ${alturaInterna})`)
-          .call(eixoX);
+        // Adicione os eixos ao gráfico
+        grupoBarras.append("g")
+            .attr("class", "eixo-x")
+            .attr("transform", `translate(0, ${alturaInterna})`)
+            .call(eixoX);
 
-      grupoBarras.append("g")
-          .attr("class", "eixo-y")
-          .call(eixoY);
+        grupoBarras.append("g")
+            .attr("class", "eixo-y")
+            .call(eixoY);
 
-      // Crie as barras para f1
-      grupoBarras.selectAll(".barra-f1")
-          .data(data)
-          .enter().append("rect")
-          .attr("class", "barra-f1")
-          .attr("x", d => escalaX(d.algorithm))
-          .attr("y", d => escalaY(d.f1))
-          .attr("width", escalaX.bandwidth())
-          .attr("height", d => alturaInterna - escalaY(d.f1))
-          .attr("fill", "steelblue");
+        // Crie as barras para f1
+        grupoBarras.selectAll(".barra-f1")
+            .data(data)
+            .enter().append("rect")
+            .attr("class", "barra-f1")
+            .attr("x", d => escalaX(d.algorithm))
+            .attr("y", d => escalaY(d[score]))
+            .attr("width", escalaX.bandwidth())
+            .attr("height", d => alturaInterna - escalaY(d[score]))
+            .attr("fill", "steelblue");
 
-      // Adicione a legenda
-      svg.append("text")
-        .attr("x", largura / 2)
-        .attr("y", altura - margem.inferior + 40) // Ajuste a posição vertical conforme necessário
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("God Class F1 results");
+    }).catch(function(error) {
+        console.log(error);
+    });
+  }
 
-  }).catch(function(error) {
-      console.log(error);
-  });
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "grafico1", "f1");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "grafico2", "f1");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "grafico3", "f1");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "grafico4", "f1");
+
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv", "grafico5", "auc");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "grafico6", "auc");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "grafico7", "auc");
+  plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "grafico8", "auc");
 </script>
