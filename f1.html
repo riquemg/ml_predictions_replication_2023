@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gráfico de Barras com D3.js</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <svg id="grafico"></svg>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+  // Defina as dimensões do gráfico
+  const largura = 600;
+  const altura = 400;
+  const margem = { topo: 20, direita: 30, inferior: 40, esquerda: 60 };
+
+  // Calcule as dimensões internas do gráfico
+  const larguraInterna = largura - margem.esquerda - margem.direita;
+  const alturaInterna = altura - margem.topo - margem.inferior;
+
+  // Selecione o elemento SVG
+  const svg = d3.select("#grafico")
+      .attr("width", largura)
+      .attr("height", altura);
+
+  // Crie um grupo dentro do SVG para as barras
+  const grupoBarras = svg.append("g")
+      .attr("transform", `translate(${margem.esquerda}, ${margem.topo})`);
+
+  // Carregue o arquivo CSV e crie o gráfico de barras
+  d3.csv("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/gc_scores.csv").then(function(data) {
+
+      // Converta os valores de f1
+      data.forEach(function(d) {
+          d.f1 = +d.f1;
+      });
+
+      // Crie escalas para os eixos X e Y
+      const escalaX = d3.scaleBand()
+          .domain(data.map(d => d.algorithm))
+          .range([0, larguraInterna])
+          .padding(0.1);
+
+      const escalaY = d3.scaleLinear()
+          .domain([0, d3.max(data, d => Math.max(d.f1))])
+          .nice()
+          .range([alturaInterna, 0]);
+
+      // Crie os eixos X e Y
+      const eixoX = d3.axisBottom(escalaX);
+      const eixoY = d3.axisLeft(escalaY);
+
+      // Adicione os eixos ao gráfico
+      grupoBarras.append("g")
+          .attr("class", "eixo-x")
+          .attr("transform", `translate(0, ${alturaInterna})`)
+          .call(eixoX);
+
+      grupoBarras.append("g")
+          .attr("class", "eixo-y")
+          .call(eixoY);
+
+      // Crie as barras para f1
+      grupoBarras.selectAll(".barra-f1")
+          .data(data)
+          .enter().append("rect")
+          .attr("class", "barra-f1")
+          .attr("x", d => escalaX(d.algorithm))
+          .attr("y", d => escalaY(d.f1))
+          .attr("width", escalaX.bandwidth())
+          .attr("height", d => alturaInterna - escalaY(d.f1))
+          .attr("fill", "steelblue");
+
+      // Adicione a legenda
+      svg.append("text")
+        .attr("x", largura / 2)
+        .attr("y", altura - margem.inferior + 40) // Ajuste a posição vertical conforme necessário
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("God Class F1 results");
+
+  }).catch(function(error) {
+      console.log(error);
+  });
+</script>
