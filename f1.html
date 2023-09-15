@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Exemplo de Página Bootstrap</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
   <!-- Inclua o CSS do Bootstrap (v4.5.2) -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
@@ -12,7 +11,7 @@
 
 <div class="container">
     <!-- Início da Linha (Row) -->
-    <div class="row">
+    <div id="f1" class="row">
         <!-- Coluna 1 -->
         <div class="col-sm-3">
           <h5 class="card-title text-center">God Class F1</h5>
@@ -40,6 +39,14 @@
     <!-- Fim da Linha (Row) -->
 
     <div class="row">
+      <div class="col-sm-12 text-center">
+        <button id="exportar-f1">Exportar para PNG</button>
+      </div>
+    </div>
+
+    <br>
+
+    <div id="auc" class="row">
         <!-- Coluna 1 -->
         <div class="col-sm-3">
           <h5 class="card-title text-center">God Class AUC</h5>
@@ -64,12 +71,20 @@
           <svg id="grafico8"></svg>
         </div>
     </div>
+
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <button id="exportar-auc">Exportar para PNG</button>
+      </div>
+    </div>
 </div>
 
 <!-- Inclua o JavaScript do Bootstrap (v4.5.2) e o jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
 
 </body>
 </html>
@@ -154,4 +169,32 @@
   plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/rb_scores.csv", "grafico6", "auc");
   plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/fe_scores.csv", "grafico7", "auc");
   plot("https://raw.githubusercontent.com/labsoft-ufmg/ml_predictions_replication_2023/main/results/lm_scores.csv", "grafico8", "auc");
+
+  document.getElementById('exportar-f1').addEventListener('click', function () {
+        html2canvas(document.getElementById('f1')).then(function (canvas) {
+            var imgData = canvas.toDataURL('image/png');
+
+            // Crie um elemento 'a' para fazer o download da imagem
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imgData;
+            downloadLink.download = 'exported-image.png'; // Nome do arquivo a ser baixado
+
+            // Dispare um clique no elemento 'a' para iniciar o download
+            downloadLink.click();
+        });
+    });
+
+  document.getElementById('exportar-auc').addEventListener('click', function () {
+        html2canvas(document.getElementById('auc')).then(function (canvas) {
+            var imgData = canvas.toDataURL('image/png');
+
+            // Crie um elemento 'a' para fazer o download da imagem
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imgData;
+            downloadLink.download = 'exported-image.png'; // Nome do arquivo a ser baixado
+
+            // Dispare um clique no elemento 'a' para iniciar o download
+            downloadLink.click();
+        });
+    });
 </script>
