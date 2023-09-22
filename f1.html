@@ -6,6 +6,13 @@
   <title>Exemplo de Página Bootstrap</title>
   <!-- Inclua o CSS do Bootstrap (v4.5.2) -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style type="text/css">
+    .titulo{
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        font-size: 1rem;
+        font-weight: 400;
+    }
+  </style>
 </head>
 <body>
 
@@ -14,25 +21,25 @@
     <div id="f1" class="row">
         <!-- Coluna 1 -->
         <div class="col-sm-3">
-          <h5 class="card-title text-center">God Class F1</h5>
+          <h5 class="card-title text-center titulo">God Class</h5>
           <svg id="grafico1"></svg>
         </div>
 
         <!-- Coluna 2 -->
         <div class="col-sm-3">
-            <h5 class="card-title text-center">Refused Bequest F1</h5>
+            <h5 class="card-title text-center titulo">Refused Bequest</h5>
             <svg id="grafico2"></svg>
         </div>
 
         <!-- Coluna 3 -->
         <div class="col-sm-3">
-            <h5 class="card-title text-center">Feature Envy F1</h5>
+            <h5 class="card-title text-center titulo">Feature Envy</h5>
             <svg id="grafico3"></svg>
         </div>
 
         <!-- Coluna 4 -->
         <div class="col-sm-3">
-          <h5 class="card-title text-center">Long Method F1</h5>
+          <h5 class="card-title text-center titulo">Long Method</h5>
           <svg id="grafico4"></svg>
         </div>
     </div>
@@ -49,25 +56,25 @@
     <div id="auc" class="row">
         <!-- Coluna 1 -->
         <div class="col-sm-3">
-          <h5 class="card-title text-center">God Class AUC</h5>
+          <h5 class="card-title text-center titulo">God Class</h5>
           <svg id="grafico5"></svg>
         </div>
 
         <!-- Coluna 2 -->
         <div class="col-sm-3">
-            <h5 class="card-title text-center">Refused Bequest AUC</h5>
+            <h5 class="card-title text-center titulo">Refused Bequest</h5>
             <svg id="grafico6"></svg>
         </div>
 
         <!-- Coluna 3 -->
         <div class="col-sm-3">
-            <h5 class="card-title text-center">Feature Envy AUC</h5>
+            <h5 class="card-title text-center titulo">Feature Envy</h5>
             <svg id="grafico7"></svg>
         </div>
 
         <!-- Coluna 4 -->
         <div class="col-sm-3">
-          <h5 class="card-title text-center">Long Method AUC</h5>
+          <h5 class="card-title text-center titulo">Long Method</h5>
           <svg id="grafico8"></svg>
         </div>
     </div>
@@ -126,7 +133,8 @@
             .padding(0.1);
 
         const escalaY = d3.scaleLinear()
-            .domain([0, d3.max(data, d => Math.max(d[score]))])
+            //.domain([0, d3.max(data, d => Math.max(d[score]))])
+            .domain([0, 1])
             .nice()
             .range([alturaInterna, 0]);
 
